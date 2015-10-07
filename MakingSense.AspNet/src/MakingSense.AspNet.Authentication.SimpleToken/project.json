@@ -1,11 +1,14 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "0.1.0-beta7-*",
   "description": "MakingSense.AspNet.Authentication.SimpleToken Class Library",
-  "authors": [ "windows" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
-
+  "authors": [ "MakingSense" ],
+  "tags": [ "ASP.NET 5", "vnext", "authentication", "token", "bearer" ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MakingSense/aspnet-authentication-simpletoken"
+  },
+  "projectUrl": "https://github.com/MakingSense/aspnet-authentication-simpletoken",
+  "licenseUrl": "http://www.gnu.org/licenses/lgpl.html",
   "dependencies": {
     "MakingSense.AspNet.Abstractions": "0.1.0-beta7",
     "Microsoft.AspNet.Authentication": "1.0.0-beta7",

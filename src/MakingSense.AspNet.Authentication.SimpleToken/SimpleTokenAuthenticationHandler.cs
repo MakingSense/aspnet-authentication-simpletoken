@@ -53,7 +53,7 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 			}
 
 			// Search in URI Query Parameter (http://tools.ietf.org/html/rfc6750#section-2.3)
-			var tokenFromQuery = request.Query["access_token"];
+			var tokenFromQuery = request.Query["access_token"] ?? request.Query["api_key"];
 			if (tokenFromQuery != null)
 			{
 				return tokenFromQuery.Trim();

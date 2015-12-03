@@ -25,7 +25,7 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 			[NotNull] ILoggerFactory loggerFactory,
 			[NotNull] IOptions<SimpleTokenAuthenticationOptions> options,
 			[NotNull] IUrlEncoder encoder,
-            ConfigureOptions<SimpleTokenAuthenticationOptions> configureOptions)
+			ConfigureOptions<SimpleTokenAuthenticationOptions> configureOptions)
 			: base(next, options, loggerFactory, encoder, configureOptions)
 		{
 		}

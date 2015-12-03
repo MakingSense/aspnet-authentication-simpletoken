@@ -11,21 +11,22 @@ namespace Microsoft.AspNet.Builder
 	{
 		public static IApplicationBuilder UseSimpleTokenAuthentication([NotNull] this IApplicationBuilder app, Action<SimpleTokenAuthenticationOptions> configureOptions = null, string optionsName = "")
 		{
-			return app.UseMiddleware<SimpleTokenAuthenticationMiddleware>(
-				new ConfigureOptions<SimpleTokenAuthenticationOptions>(o =>
-				{
-					if (configureOptions != null)
-					{
-						configureOptions(o);
-					}
-					if (o.SecurityTokenValidatorsFactory == null)
-					{
-						o.SecurityTokenValidatorsFactory = () => app.ApplicationServices.GetServices<ISecurityTokenValidator>();
-					}
-				})
-				{
-					Name = optionsName
-				});
+			var options = new SimpleTokenAuthenticationOptions()
+			{
+				AuthenticationScheme = optionsName
+			};
+
+			if (configureOptions != null)
+			{
+				configureOptions(options);
+			}
+
+			if (options.SecurityTokenValidatorsFactory == null)
+			{
+				options.SecurityTokenValidatorsFactory = () => app.ApplicationServices.GetServices<ISecurityTokenValidator>();
+			}
+
+			return app.UseMiddleware<SimpleTokenAuthenticationMiddleware>(options);
 		}
 	}
 }

@@ -8,11 +8,11 @@ namespace Microsoft.AspNet.Builder
 {
 	public static class SimpleTokenAppBuilderExtensions
 	{
-		public static IApplicationBuilder UseSimpleTokenAuthentication([NotNull] this IApplicationBuilder app, Action<SimpleTokenAuthenticationOptions> configureOptions = null, string optionsName = "")
+		public static IApplicationBuilder UseSimpleTokenAuthentication([NotNull] this IApplicationBuilder app, Action<SimpleTokenAuthenticationOptions> configureOptions = null, string authenticationScheme = "Bearer")
 		{
 			var options = new SimpleTokenAuthenticationOptions()
 			{
-				AuthenticationScheme = optionsName
+				AuthenticationScheme = authenticationScheme
 			};
 
 			if (configureOptions != null)

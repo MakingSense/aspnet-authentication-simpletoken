@@ -1,9 +1,8 @@
 using System;
-using MakingSense.AspNet.Authentication.SimpleToken;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Internal;
-using Microsoft.Framework.OptionsModel;
 using System.IdentityModel.Tokens;
+using MakingSense.AspNet.Authentication.SimpleToken;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Builder
 {

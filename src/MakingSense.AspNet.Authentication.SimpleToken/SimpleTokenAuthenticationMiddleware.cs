@@ -22,11 +22,10 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 		/// </summary>
 		public SimpleTokenAuthenticationMiddleware(
 			[NotNull] RequestDelegate next,
+			[NotNull] SimpleTokenAuthenticationOptions options,
 			[NotNull] ILoggerFactory loggerFactory,
-			[NotNull] IOptions<SimpleTokenAuthenticationOptions> options,
-			[NotNull] IUrlEncoder encoder,
-            ConfigureOptions<SimpleTokenAuthenticationOptions> configureOptions)
-			: base(next, options, loggerFactory, encoder, configureOptions)
+			[NotNull] IUrlEncoder encoder)
+			: base(next, options, loggerFactory, encoder)
 		{
 		}
 

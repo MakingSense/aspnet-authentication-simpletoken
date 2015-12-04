@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MakingSense.AspNet.Authentication.Abstractions;
 using Microsoft.AspNet.Authentication;
+using Microsoft.Net.Http.Headers;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken
 {
@@ -23,7 +24,7 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 		/// </returns>
 		public static string ExtractToken(HttpRequest request)
 		{
-			var authorizationHeader = request.Headers.Get("Authorization");
+			var authorizationHeader = (string)request.Headers[HeaderNames.Authorization];
 			if (authorizationHeader != null)
 			{
 				// Search in Authorization Request Header Field (http://tools.ietf.org/html/rfc6750#section-2.1)
@@ -53,7 +54,7 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 			}
 
 			// Search in URI Query Parameter (http://tools.ietf.org/html/rfc6750#section-2.3)
-			var tokenFromQuery = request.Query["access_token"] ?? request.Query["api_key"];
+			var tokenFromQuery = (string)request.Query["access_token"] ?? request.Query["api_key"];
 			if (tokenFromQuery != null)
 			{
 				return tokenFromQuery.Trim();

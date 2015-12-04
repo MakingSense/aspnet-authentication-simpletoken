@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.1.0-beta8-*",
+  "version": "0.1.0-rc1-final-*",
   "description": "MakingSense.AspNet.Authentication.SimpleToken Class Library",
   "authors": [ "MakingSense" ],
   "tags": [ "ASP.NET 5", "vnext", "authentication", "token", "bearer" ],
@@ -10,21 +10,21 @@
   "projectUrl": "https://github.com/MakingSense/aspnet-authentication-simpletoken",
   "licenseUrl": "http://www.gnu.org/licenses/lgpl.html",
   "dependencies": {
-    "MakingSense.AspNet.Abstractions": "0.1.0-beta8",
-    "Microsoft.AspNet.Authentication": "1.0.0-beta8",
+    "MakingSense.AspNet.Abstractions": "0.1.0-rc1-final",
+    "Microsoft.AspNet.Authentication": "1.0.0-rc1-final",
     "Newtonsoft.Json": "6.0.8",
-    "System.IdentityModel.Tokens": "5.0.0-beta8-210131116"
+    "System.IdentityModel.Tokens": "5.0.0-rc1-211161024"
   },
 
   "frameworks": {
     "dnx451": { },
     "dnxcore50": {
       "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23409",
-        "System.Collections": "4.0.11-beta-23409",
-        "System.Linq": "4.0.1-beta-23409",
-        "System.Runtime": "4.0.21-beta-23409",
-        "System.Threading": "4.0.11-beta-23409"
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516"
       }
     }
   }

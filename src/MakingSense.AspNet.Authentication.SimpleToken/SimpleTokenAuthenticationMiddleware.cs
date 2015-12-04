@@ -1,10 +1,9 @@
 using System;
-using Microsoft.AspNet.Builder;
-using Microsoft.Framework.Internal;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.OptionsModel;
-using Microsoft.Framework.WebEncoders;
 using Microsoft.AspNet.Authentication;
+using Microsoft.AspNet.Builder;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.WebEncoders;
+using Microsoft.Framework.Internal;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken
 {

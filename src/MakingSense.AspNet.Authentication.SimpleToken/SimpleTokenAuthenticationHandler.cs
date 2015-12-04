@@ -1,11 +1,11 @@
 using System;
-using Microsoft.AspNet.Http.Authentication;
 using System.IdentityModel.Tokens;
-using Microsoft.AspNet.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MakingSense.AspNet.Authentication.Abstractions;
 using Microsoft.AspNet.Authentication;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Authentication;
 using Microsoft.Net.Http.Headers;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken
@@ -50,6 +50,7 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 					}
 				}
 
+				// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
 				throw new AuthenticationException("Authorization header exists but does not contains valid information.");
 			}
 
@@ -63,19 +64,24 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 			return null;
 		}
 
+		static readonly Task DoneTask = Task.FromResult(0);
 
 		/// <summary>
 		/// Searches the 'Authorization' header for a 'Bearer' token. If the 'Bearer' token is found, it is validated using <see cref="TokenValidationParameters"/> set in the options.
 		/// </summary>
 		/// <returns></returns>
-		protected override Task<AuthenticationTicket> HandleAuthenticateAsync()
+		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
+			// Ugly patch to make this method should to be async in order to allow result caching by caller
+			await DoneTask;
+
 			string token = ExtractToken(Request);
 
 			// If no token found, no further work possible
 			if (string.IsNullOrEmpty(token))
 			{
-				return Task.FromResult<AuthenticationTicket>(null);
+				// Not so nice, but AuthenticateResult.Fail has the same behavior
+				return null;
 			}
 
 			var validationParameters = Options.TokenValidationParameters.Clone();
@@ -88,10 +94,11 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 				{
 					var principal = validator.ValidateToken(token, validationParameters, out validatedToken);
 					var ticket = new AuthenticationTicket(principal, new AuthenticationProperties(), Options.AuthenticationScheme);
-					return Task.FromResult(ticket);
+					return AuthenticateResult.Success(ticket);
 				}
 			}
 
+			// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
 			throw new AuthenticationException("Authorization token has been detected but it cannot be read.");
 		}
 	}

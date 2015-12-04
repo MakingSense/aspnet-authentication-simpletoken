@@ -1,8 +1,8 @@
-using Microsoft.AspNet.Authentication;
-using Microsoft.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
+using Microsoft.AspNet.Authentication;
+using Microsoft.Framework.Internal;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken
 {

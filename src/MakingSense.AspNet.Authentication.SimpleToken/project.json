@@ -12,7 +12,7 @@
   "dependencies": {
     "MakingSense.AspNet.Abstractions": "0.1.0-rc1-final",
     "Microsoft.AspNet.Authentication": "1.0.0-rc1-final",
-    "Newtonsoft.Json": "6.0.8",
+    "Newtonsoft.Json": "7.0.1",
     "System.IdentityModel.Tokens": "5.0.0-rc1-211161024"
   },
 

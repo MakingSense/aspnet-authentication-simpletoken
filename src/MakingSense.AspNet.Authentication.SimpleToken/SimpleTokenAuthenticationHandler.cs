@@ -1,11 +1,12 @@
 using System;
-using System.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.Tasks;
-using MakingSense.AspNet.Authentication.Abstractions;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Authentication;
+using MakingSense.AspNetCore.Authentication.Abstractions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken

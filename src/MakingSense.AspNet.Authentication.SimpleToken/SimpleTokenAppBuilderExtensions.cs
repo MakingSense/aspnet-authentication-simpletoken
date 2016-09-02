@@ -1,10 +1,10 @@
 using System;
-using System.IdentityModel.Tokens;
 using MakingSense.AspNet.Authentication.SimpleToken;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Framework.Internal;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Microsoft.AspNet.Builder
+namespace Microsoft.AspNetCore.Builder
 {
 	public static class SimpleTokenAppBuilderExtensions
 	{

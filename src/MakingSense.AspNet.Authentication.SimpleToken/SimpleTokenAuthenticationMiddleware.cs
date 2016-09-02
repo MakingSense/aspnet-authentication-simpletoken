@@ -1,8 +1,10 @@
 using System;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Builder;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.Extensions.Options;
 using Microsoft.Framework.Internal;
 
 namespace MakingSense.AspNet.Authentication.SimpleToken
@@ -21,9 +23,9 @@ namespace MakingSense.AspNet.Authentication.SimpleToken
 		/// </summary>
 		public SimpleTokenAuthenticationMiddleware(
 			[NotNull] RequestDelegate next,
-			[NotNull] SimpleTokenAuthenticationOptions options,
+			[NotNull] IOptions<SimpleTokenAuthenticationOptions> options,
 			[NotNull] ILoggerFactory loggerFactory,
-			[NotNull] IUrlEncoder encoder)
+			[NotNull] UrlEncoder encoder)
 			: base(next, options, loggerFactory, encoder)
 		{
 		}

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 
-namespace MakingSense.AspNet.Authentication.SimpleToken
+namespace MakingSense.AspNetCore.Authentication.SimpleToken
 {
 	public class SimpleTokenAuthenticationHandler : AuthenticationHandler<SimpleTokenAuthenticationOptions>
 	{

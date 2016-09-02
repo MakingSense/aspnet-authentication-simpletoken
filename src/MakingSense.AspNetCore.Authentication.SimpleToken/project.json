@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0.0-*",
-  "description": "MakingSense.AspNet.Authentication.SimpleToken Class Library",
+  "description": "MakingSense.AspNetCore.Authentication.SimpleToken Class Library",
   "authors": [ "MakingSense" ],
   "packOptions": {
     "tags": [ "ASP.NET 5", "vnext", "authentication", "token", "bearer" ],

@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>209cd8c9-0545-4a2e-826d-5b83044261af</ProjectGuid>
-    <RootNamespace>MakingSense.AspNet.Authentication.SimpleToken</RootNamespace>
+    <RootNamespace>MakingSense.AspNetCore.Authentication.SimpleToken</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj\</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

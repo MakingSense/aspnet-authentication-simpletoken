@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Framework.Internal;
 
-namespace MakingSense.AspNet.Authentication.SimpleToken
+namespace MakingSense.AspNetCore.Authentication.SimpleToken
 {
 	/// <summary>
 	/// SimpleToken authentication middleware component which is added to an HTTP pipeline. This class is not

@@ -1,5 +1,5 @@
 using System;
-using MakingSense.AspNet.Authentication.SimpleToken;
+using MakingSense.AspNetCore.Authentication.SimpleToken;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Framework.Internal;
 using Microsoft.IdentityModel.Tokens;

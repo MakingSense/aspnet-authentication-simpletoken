@@ -21,8 +21,11 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 		/// It does not search in Form-Encoded Body Parameter (http://tools.ietf.org/html/rfc6750#section-2.2).
 		/// </remarks>
 		/// <returns>
-		/// Returns Token if found, null otherwise
+		/// Returns Token if found, null otherwise.
 		/// </returns>
+		/// <exception>
+		/// Throws AuthenticationException when Authentication header is found, but id does not contains valid data format.
+		/// </exception>
 		public static string ExtractToken(HttpRequest request)
 		{
 			var authorizationHeader = (string)request.Headers[HeaderNames.Authorization];
@@ -55,7 +58,6 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 				throw new AuthenticationException("Authorization header exists but does not contains valid information.");
 			}
 
-			// Search in URI Query Parameter (http://tools.ietf.org/html/rfc6750#section-2.3)
 			var tokenFromQuery = (string)request.Query["access_token"] ?? request.Query["api_key"];
 			if (tokenFromQuery != null)
 			{
@@ -73,16 +75,12 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 		/// <returns></returns>
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
-			// Ugly patch to make this method should to be async in order to allow result caching by caller
-			await DoneTask;
-
-			string token = ExtractToken(Request);
+			var token = ExtractToken(Request);
 
 			// If no token found, no further work possible
 			if (string.IsNullOrEmpty(token))
 			{
-				// Not so nice, but AuthenticateResult.Fail has the same behavior
-				return null;
+				return AuthenticateResult.Skip();
 			}
 
 			var validationParameters = Options.TokenValidationParameters.Clone();
@@ -98,6 +96,9 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 					return AuthenticateResult.Success(ticket);
 				}
 			}
+
+			// Ugly patch to make this method should to be async in order to allow result caching by caller
+			await DoneTask;
 
 			// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
 			throw new AuthenticationException("Authorization token has been detected but it cannot be read.");

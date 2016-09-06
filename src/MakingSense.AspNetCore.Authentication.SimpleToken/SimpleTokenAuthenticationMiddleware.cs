@@ -23,11 +23,41 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 		/// </summary>
 		public SimpleTokenAuthenticationMiddleware(
 			[NotNull] RequestDelegate next,
-			[NotNull] IOptions<SimpleTokenAuthenticationOptions> options,
 			[NotNull] ILoggerFactory loggerFactory,
-			[NotNull] UrlEncoder encoder)
+			[NotNull] UrlEncoder encoder,
+			[NotNull] IOptions<SimpleTokenAuthenticationOptions> options)
 			: base(next, options, loggerFactory, encoder)
 		{
+			if (next == null)
+			{
+				throw new ArgumentNullException(nameof(next));
+			}
+
+			if (loggerFactory == null)
+			{
+				throw new ArgumentNullException(nameof(loggerFactory));
+			}
+
+			if (encoder == null)
+			{
+				throw new ArgumentNullException(nameof(encoder));
+			}
+
+			if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
+
+
+			if (string.IsNullOrEmpty(Options.AuthenticationScheme))
+			{
+				throw new ArgumentException(nameof(Options.AuthenticationScheme));
+			}
+
+			if (Options.SecurityTokenValidatorsFactory == null)
+			{
+				throw new ArgumentException(nameof(Options.SecurityTokenValidatorsFactory));
+			}
 		}
 
 		/// <summary>

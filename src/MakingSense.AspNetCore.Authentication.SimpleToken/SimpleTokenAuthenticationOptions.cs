@@ -24,11 +24,6 @@ namespace Microsoft.AspNetCore.Builder
 		public TokenValidationParameters TokenValidationParameters { get; [param: NotNull] set; } = new TokenValidationParameters();
 
 		/// <summary>
-		/// Gets or sets the challenge to put in the "WWW-Authenticate" header.
-		/// </summary>
-		public string Challenge { get; set; } = "Bearer";
-
-		/// <summary>
 		/// Creates an instance of SimpleToken authentication options with default values.
 		/// </summary>
 		public SimpleTokenAuthenticationOptions() : base()

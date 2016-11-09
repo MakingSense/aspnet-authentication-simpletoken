@@ -38,6 +38,15 @@ namespace Microsoft.AspNetCore.Builder
 
 			if (options.SecurityTokenValidatorsFactory == null)
 			{
+				// TODO: fix it because it is using app services, and it should use scope services,
+				// a work around could be:
+				// ```
+				// SecurityTokenValidatorsFactory = () =>
+				// {
+				//     var context = app.ApplicationServices.GetService<IHttpContextAccessor>().HttpContext;
+				//     return context.RequestServices.GetServices<ISecurityTokenValidator>();
+				// }
+				// ```
 				options.SecurityTokenValidatorsFactory = () => app.ApplicationServices.GetServices<ISecurityTokenValidator>();
 			}
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.4-alpha-*",
+  "version": "1.0.5-alpha-*",
   "description": "MakingSense.AspNetCore.Authentication.SimpleToken Class Library",
   "authors": [ "MakingSense" ],
   "packOptions": {
@@ -12,7 +12,7 @@
     "licenseUrl": "http://www.gnu.org/licenses/lgpl.html"
   },
   "dependencies": {
-    "MakingSense.AspNetCore.Abstractions": "1.0.4-*",
+    "MakingSense.AspNetCore.Abstractions": "1.0.5-*",
     "Microsoft.AspNetCore.Authentication": "1.1.0",
     "Microsoft.CSharp": "4.3.0",
     "Microsoft.IdentityModel.Tokens": "5.1.0",

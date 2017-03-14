@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <Description>MakingSense.AspNetCore.Authentication.SimpleToken Class Library</Description>
-    <VersionPrefix>1.0.5-alpha</VersionPrefix>
     <Authors>MakingSense</Authors>
     <TargetFrameworks>net451;netcoreapp1.1</TargetFrameworks>
     <AssemblyName>MakingSense.AspNetCore.Authentication.SimpleToken</AssemblyName>
@@ -13,13 +12,14 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/MakingSense/aspnet-authentication-simpletoken</RepositoryUrl>
     <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
+	<Version>1.1.0-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MakingSense.AspNetCore.Abstractions" Version="1.0.5-*" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="1.1.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Threading" Version="4.3.0" />

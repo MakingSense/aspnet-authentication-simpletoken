@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MakingSense.AspNetCore.Abstractions" Version="1.0.5-*" />
+    <PackageReference Include="MakingSense.AspNetCore.Abstractions" Version="1.1.0-*" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="1.1.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.3" />

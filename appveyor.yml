@@ -5,9 +5,6 @@ version: 2.0.0-alpha-{build}
 nuget:
   project_feed: true
 
-install:
- - cmd: nuget sources add -Name makingsense-aspnet -Source https://ci.appveyor.com/nuget/makingsense-aspnet -UserName dtru+read@makingsense.com -Password 4@pdw@BlfpQn
-
 before_build:
  - cmd: set DOTNET_ASSEMBLY_FILE_VERSION=%APPVEYOR_BUILD_NUMBER%
  - cmd: set DOTNET_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%

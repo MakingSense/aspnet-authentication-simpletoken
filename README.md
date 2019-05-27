@@ -1,4 +1,4 @@
-# SimpleToken Authentication Middleware
+# SimpleToken Authentication
 
 This package allows to extract token from authenticated requests and delegate it to an appropriated ISecurityTokenValidator and generate and AuthenticationTicket.
 
@@ -6,7 +6,7 @@ This package allows to extract token from authenticated requests and delegate it
 
 ### Token extraction details
 
-This middleware tries to support almost [RFC 6750](http://tools.ietf.org/html/rfc6750) and some licenses based on [GitHub behavior](https://developer.github.com/v3/oauth/#use-the-access-token-to-access-the-api). But does not support Form-Encoded Body Parameter (http://tools.ietf.org/html/rfc6750#section-2.2).
+This tries to support almost [RFC 6750](http://tools.ietf.org/html/rfc6750) and some licenses based on [GitHub behavior](https://developer.github.com/v3/oauth/#use-the-access-token-to-access-the-api). But does not support Form-Encoded Body Parameter (http://tools.ietf.org/html/rfc6750#section-2.2).
 
 There are three methods of sending tokens:
 
@@ -76,7 +76,37 @@ For example:
     WWW-Authenticate: Bearer
     ```
 
-## Usage 
+## Usage v2
+
+It is necessary to register all valid `ISecurityTokenValidator` classes and configure the Authentication service using the `AddSimpleTokenAuthentication` extension method.
+
+Example:
+
+```csharp
+public class Startup
+{
+	public void ConfigureServices(IServiceCollection services)
+	{
+		services.AddTransient<ISecurityTokenValidator, MyCustomTokenValidator>();
+		services.AddAuthentication()
+			.AddSimpleTokenAuthentication(options =>
+			{
+				options.SecurityTokenValidatorsFactory = () =>
+				{
+					var context = services.BuildServiceProvider().GetService<IHttpContextAccessor>().HttpContext;
+					return context.RequestServices.GetServices<ISecurityTokenValidator>();
+				};
+			});
+	}
+
+	public void Configure(IApplicationBuilder app, ILoggerFactory loggerfactory) {
+		app.UseAuthentication();
+		app.UseMvc();
+	}
+}
+```
+
+## Usage v1
 
 It is necessary to register all valid `ISecurityTokenValidator` classes and add the middleware to ApplicationBuilder using `UseSimpleTokenAuthentication`.
 

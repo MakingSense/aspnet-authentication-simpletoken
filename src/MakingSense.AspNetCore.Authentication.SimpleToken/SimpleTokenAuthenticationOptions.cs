@@ -1,14 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Framework.Internal;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Microsoft.AspNetCore.Builder
+namespace MakingSense.AspNetCore.Authentication.SimpleToken
 {
 	/// <summary>
 	/// Options class provides information needed to control SimpleToken middleware behavior
 	/// </summary>
-	public class SimpleTokenAuthenticationOptions : AuthenticationOptions
+	public class SimpleTokenAuthenticationOptions : AuthenticationSchemeOptions
 	{
 		/// <summary>
 		/// Gets or sets the <see cref="SecurityTokenValidatorsFactory"/> for creating validators for validating tokens.
@@ -30,5 +31,19 @@ namespace Microsoft.AspNetCore.Builder
 		{
 		}
 
+		public override void Validate()
+		{
+			base.Validate();
+
+			if (SecurityTokenValidatorsFactory == null)
+			{
+				throw new ArgumentException(nameof(SecurityTokenValidatorsFactory));
+			}
+
+			if (TokenValidationParameters == null)
+			{
+				throw new ArgumentException(nameof(TokenValidationParameters));
+			}
+		}
 	}
 }

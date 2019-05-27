@@ -1,11 +1,12 @@
-using System;
+﻿using System;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using MakingSense.AspNetCore.Authentication.Abstractions;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 
@@ -13,6 +14,15 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 {
 	public class SimpleTokenAuthenticationHandler : AuthenticationHandler<SimpleTokenAuthenticationOptions>
 	{
+		public SimpleTokenAuthenticationHandler(
+			IOptionsMonitor<SimpleTokenAuthenticationOptions> options,
+			ILoggerFactory logger,
+			UrlEncoder encoder,
+			ISystemClock clock)
+			: base(options, logger, encoder, clock)
+		{
+		}
+
 		/// <summary>
 		/// Overrides the standard AuthenticationHandler to be more robust supporting [RFC 6750](http://tools.ietf.org/html/rfc6750) and
 		/// some licenses based on [GitHub behavior](https://developer.github.com/v3/oauth/#use-the-access-token-to-access-the-api).
@@ -53,7 +63,6 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 						return pair.Substring(ix + 1).Trim();
 					}
 				}
-
 				// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
 				throw new AuthenticationException("Authorization header exists but does not contains valid information.");
 			}
@@ -75,33 +84,39 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 		/// <returns></returns>
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
-			var token = ExtractToken(Request);
-
-			// If no token found, no further work possible
-			if (string.IsNullOrEmpty(token))
+			try
 			{
-				return AuthenticateResult.Skip();
-			}
+				var token = ExtractToken(Request);
 
-			var validationParameters = Options.TokenValidationParameters.Clone();
-
-			SecurityToken validatedToken;
-			var validators = Options.SecurityTokenValidatorsFactory();
-			foreach (var validator in validators)
-			{
-				if (validator.CanReadToken(token))
+				// If no token found, no further work possible
+				if (string.IsNullOrEmpty(token))
 				{
-					var principal = validator.ValidateToken(token, validationParameters, out validatedToken);
-					var ticket = new AuthenticationTicket(principal, new AuthenticationProperties(), Options.AuthenticationScheme);
-					return AuthenticateResult.Success(ticket);
+					return AuthenticateResult.NoResult();
 				}
+
+				var validationParameters = Options.TokenValidationParameters.Clone();
+
+				var validators = Options.SecurityTokenValidatorsFactory();
+				foreach (var validator in validators)
+				{
+					if (validator.CanReadToken(token))
+					{
+						var principal = validator.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+						var ticket = new AuthenticationTicket(principal, Scheme.Name);
+						return AuthenticateResult.Success(ticket);
+					}
+				}
+
+				// Ugly patch to make this method should to be async in order to allow result caching by caller
+				await DoneTask;
+
+				// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
+				throw new AuthenticationException("Authorization token has been detected but it cannot be read.");
 			}
-
-			// Ugly patch to make this method should to be async in order to allow result caching by caller
-			await DoneTask;
-
-			// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
-			throw new AuthenticationException("Authorization token has been detected but it cannot be read.");
+			catch (AuthenticationException ex)
+			{
+				return AuthenticateResult.Fail(ex.Message);
+			}
 		}
 	}
 }

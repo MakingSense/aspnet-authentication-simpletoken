@@ -84,39 +84,38 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 		/// <returns></returns>
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
+			string token;
 			try
 			{
-				var token = ExtractToken(Request);
-
-				// If no token found, no further work possible
-				if (string.IsNullOrEmpty(token))
-				{
-					return AuthenticateResult.NoResult();
-				}
-
-				var validationParameters = Options.TokenValidationParameters.Clone();
-
-				var validators = Options.SecurityTokenValidatorsFactory();
-				foreach (var validator in validators)
-				{
-					if (validator.CanReadToken(token))
-					{
-						var principal = validator.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
-						var ticket = new AuthenticationTicket(principal, Scheme.Name);
-						return AuthenticateResult.Success(ticket);
-					}
-				}
-
-				// Ugly patch to make this method should to be async in order to allow result caching by caller
-				await DoneTask;
-
-				// Not so nice, but AuthenticateResult.Fail does not allow us to show the error
-				throw new AuthenticationException("Authorization token has been detected but it cannot be read.");
+				token = ExtractToken(Request);
 			}
 			catch (AuthenticationException ex)
 			{
 				return AuthenticateResult.Fail(ex.Message);
+			}	
+			// If no token found, no further work possible
+			if (string.IsNullOrEmpty(token))
+			{
+				return AuthenticateResult.NoResult();
 			}
+
+			var validationParameters = Options.TokenValidationParameters.Clone();
+
+			var validators = Options.SecurityTokenValidatorsFactory();
+			foreach (var validator in validators)
+			{
+				if (validator.CanReadToken(token))
+				{
+					var principal = validator.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+					var ticket = new AuthenticationTicket(principal, Scheme.Name);
+					return AuthenticateResult.Success(ticket);
+				}
+			}
+
+				// Ugly patch to make this method should to be async in order to allow result caching by caller
+				await DoneTask;
+
+			return AuthenticateResult.Fail("Authorization token has been detected but it cannot be read.");
 		}
 	}
 }

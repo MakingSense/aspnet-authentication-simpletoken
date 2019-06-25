@@ -93,8 +93,7 @@ public class Startup
 			{
 				options.SecurityTokenValidatorsFactory = () =>
 				{
-					var context = services.BuildServiceProvider().GetService<IHttpContextAccessor>().HttpContext;
-					return context.RequestServices.GetServices<ISecurityTokenValidator>();
+					return services.BuildServiceProvider().GetServices<ISecurityTokenValidator>();
 				};
 			});
 	}

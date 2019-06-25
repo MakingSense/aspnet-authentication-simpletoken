@@ -76,8 +76,6 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 			return null;
 		}
 
-		static readonly Task DoneTask = Task.FromResult(0);
-
 		/// <summary>
 		/// Searches the 'Authorization' header for a 'Bearer' token. If the 'Bearer' token is found, it is validated using <see cref="TokenValidationParameters"/> set in the options.
 		/// </summary>
@@ -112,8 +110,8 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 				}
 			}
 
-				// Ugly patch to make this method should to be async in order to allow result caching by caller
-				await DoneTask;
+			// Ugly patch to make this method should to be async in order to allow result caching by caller
+			await Task.CompletedTask;
 
 			return AuthenticateResult.Fail("Authorization token has been detected but it cannot be read.");
 		}

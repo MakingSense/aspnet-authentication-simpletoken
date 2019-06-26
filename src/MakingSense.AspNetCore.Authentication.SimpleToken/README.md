@@ -89,13 +89,7 @@ public class Startup
 	{
 		services.AddTransient<ISecurityTokenValidator, MyCustomTokenValidator>();
 		services.AddAuthentication()
-			.AddSimpleTokenAuthentication(options =>
-			{
-				options.SecurityTokenValidatorsFactory = () =>
-				{
-					return services.BuildServiceProvider().GetServices<ISecurityTokenValidator>();
-				};
-			});
+			.AddSimpleTokenAuthentication();
 	}
 
 	public void Configure(IApplicationBuilder app, ILoggerFactory loggerfactory) {

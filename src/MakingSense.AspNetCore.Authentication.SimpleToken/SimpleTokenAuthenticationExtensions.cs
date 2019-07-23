@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -32,17 +33,9 @@ namespace MakingSense.AspNetCore.Authentication.SimpleToken
 					{
 						options.SecurityTokenValidatorsFactory = () =>
 						{
-							// TODO: fix it because it is using app services, and it should use scope services,
-							// a work around could be:
-							// ```
-							// SecurityTokenValidatorsFactory = () =>
-							// {
-							//     var context = builder.Services.BuildServiceProvider().GetService<IHttpContextAccessor>().HttpContext;
-							//     return context.RequestServices.GetServices<ISecurityTokenValidator>();
-							// }
-							// ```
 							var serviceProvider = builder.Services.BuildServiceProvider();
-							return serviceProvider.GetServices<ISecurityTokenValidator>();
+							var httpContext = serviceProvider.GetService<IHttpContextAccessor>().HttpContext;
+							return httpContext.RequestServices.GetServices<ISecurityTokenValidator>();
 						};
 					}
 				});
